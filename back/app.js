@@ -18,6 +18,7 @@ database.mongoConnect();
 //var usersRouter = require('./routes/users');
 var empleadosRouter= require('./routes/empleados.router');
 var usuariosRouter = require('./routes/usuario.router');
+var learnThreadsRouter= require('./routes/learnThread.router');
 const {router} = require("express");
 
 var app = express();
@@ -34,6 +35,7 @@ app.use('/usuarios', usuariosRouter);
 
 //ROUTER
 app.use('/empleados', empleadosRouter);
+app.use('/learnthreads',learnThreadsRouter); 
 app.use(auth)
 
 // catch 404 and forward to error handler

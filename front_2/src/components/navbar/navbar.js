@@ -28,7 +28,7 @@ export default class Menu  extends React.Component {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
                 <Nav.Link href="/empleados">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link href="/learnthread">Learn threads</Nav.Link>
             </Nav>
             <DropdownButton id="dropdown-basic-button" title="usuario">
                 <Dropdown.Header id="dropdown-header"> 

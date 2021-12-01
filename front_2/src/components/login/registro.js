@@ -2,7 +2,8 @@
 import React from 'react';
 import { Container, Form, Button, Col, Row, Image } from 'react-bootstrap';
 import './login.css';
-// import axios from 'axios';
+import axios from 'axios';
+import {APIHOST as host} from '../../app.json'
 
 // imagen de portada para login 
 import image1 from '../public/imag/loginBanner.png';
@@ -21,14 +22,36 @@ export default class login extends React.Component {
     }
 
     register(){
-        alert(`
-            -usuario:${this.state.user} 
-            - email: ${this.state.pass}
-            - contraseña: ${this.state.email}
-            - fecha Nacimiento: ${this.state.birthDate}`
+
+        axios.post(`${host}/usuarios`,{
+            usuario :           this.state.user,
+            pass:               this.state.pass,
+            correo:             this.state.email,
+            fecha_nacimiento:   this.state.birthDate,
+        })
+        .then((response) => {
+            console.log(response);
+            var data = response.data;
+            console.log(data.token);
+    
+            this.props.history.push('/');
+            // this.setState( {loading:false} );
+        })
+        .catch((err) =>{
+            console.log(err);
+            // this.setState( {loading:false} );
+        });
+
+
+        // alert(`
+        //     -usuario:${this.state.user} 
+        //     - email: ${this.state.pass}
+        //     - contraseña: ${this.state.email}
+        //     - fecha Nacimiento: ${this.state.birthDate}`
         
-        );
+        // );
     }
+
     render() { 
         return (  
             <Container id="login-container">
@@ -63,7 +86,7 @@ export default class login extends React.Component {
 
                             <Form.Group className="mt-5 mb-3">
                                 <Form.Label> Nombres  </Form.Label>
-                                <Form.Control type="email" placeholder="ejemplo@dominio.com" rounded  
+                                <Form.Control type="email" placeholder="Ingrese su nombre" rounded  
                                     onChange={(e)=>
                                         this.setState({user: e.target.value})
                                     }
