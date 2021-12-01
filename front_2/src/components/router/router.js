@@ -7,7 +7,6 @@ import {BrowserRouter as Router,
 import Login from "../login/login"
 import Registro from "../login/registro"
 import PrivateRoute from '../auth/privateroute';
-import Dashboard from '../dashboard/index'
 import Empleados from "../empleados/croud";
 
 
@@ -18,7 +17,7 @@ export default function AppRouter () {
                 <Route exact path={['/','/login']} component={Login}/>
                 <PrivateRoute exact path={[ '/empleados' ]} component ={ Empleados }/>
                 <Route exact path= {['/registro', '/login']} component={Registro}/>
-                <Route exact path= {['/Dashboard', '/login']} component={Dashboard}/>
+
                 
                 <Route
                 path={"*"}
