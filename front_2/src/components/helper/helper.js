@@ -56,5 +56,15 @@ export const request ={
         });
         
     },
+
+    delete: function (services){
+        let token =renovarSession();
+        return axios.delete(`${host}${services}`, {
+            headers:{
+                    Authorization: `Bearer ${token}`,
+            },
+        });
+    },
+
     
 };

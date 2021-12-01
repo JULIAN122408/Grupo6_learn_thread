@@ -25,8 +25,8 @@ export default class DataGrid  extends React.Component {
         if(this.props.showEditButton && !this.existsColumn('Editar'))
         this.props.columns.push(this.getEditButton());
 
-        if(this.props.showDeLeteButton && !this.existsColumn('Eliminar'))
-        this.props.columns.push(this.getDeLeteButton());
+        if(this.props.showDeleteButton && !this.existsColumn('Eliminar'))
+        this.props.columns.push(this.getDeleteButton());
             
     }
 
@@ -70,12 +70,12 @@ getEditButton (){
 
 }
 
-getDeLeteButton(){
+getDeleteButton(){
     return{
         text: 'Eliminar',
         formatter:(cell, row) =>{
             return(
-                <Button onclick={()=>this.props.onClickDeLeteButton(row)}>
+                <Button onClick={()=> this.props.onClickDeleteButton(row)}>
                     <FontAwesomeIcon icon={faTrash}/>
                 </Button>
             );
