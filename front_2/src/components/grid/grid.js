@@ -1,5 +1,8 @@
 import React from 'react';
+import ConfirmationPrompts from '../prompts/confirmation';
 import {request} from '../helper/helper';
+import {Card,CardBody,CardTitle} from 'reactstrap';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 import { Row, Col, Button} from 'react-bootstrap';
 //import './empleados.css';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -10,6 +13,7 @@ import Loading from '../loading/loading'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import {isUndefined} from 'util';
+import MessagePrompt from '../prompts/message';
 
 //barra search
 const { SearchBar } = Search;
@@ -18,8 +22,18 @@ export default class DataGrid  extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            idEmpleado:null,
             Loading:false,
-            rows: []
+            rows: [],
+            confirmation:{
+                title:'Modificar empleado',
+                text:'Desea Modificar empleado?',
+                show:false,
+            },
+            message :{
+                text: '',
+                show: false,
+            },
         };
 
         if(this.props.showEditButton && !this.existsColumn('Editar'))
@@ -27,6 +41,9 @@ export default class DataGrid  extends React.Component {
 
         if(this.props.showDeleteButton && !this.existsColumn('Eliminar'))
         this.props.columns.push(this.getDeleteButton());
+
+        this.onCancel= this.onCancel.bind(this);
+        this.onConfirm=this.onConfirm.bind(this);
             
     }
 
@@ -84,6 +101,55 @@ getDeleteButton(){
     };
 }
 
+    onCancel(){
+        this.setState({
+            confirmation:{
+                ...this.state.confirmation,
+                show:false,
+            }
+        })
+    }
+
+    onConfirm(){
+        this.setState(
+            {
+                confirmation: {
+                    ...this.state.confirmation,
+                    show: false,
+                }
+            },
+
+            this.eliminarEmpleados()
+        );
+    }
+
+    eliminarEmpleados(){
+        this.setState({loading:true});
+        request
+        .delete(`/empleados/${this.state.idEmpleado}`)
+        .then((response)=>{
+            this.setState({
+                loading:false,
+                message:{
+                    text: response.data.msg,
+                    show:true,
+                },
+            });
+            if(response.data.exito) this.reloadPage();
+        })
+        .catch((err)=>{
+            console.error(err);
+            this.setState({loading:false});
+        });
+    }
+
+    reloadPage(){
+        setTimeout(()=>{
+            window.location.reload();
+        },2500);
+    }
+
+
     render() {
         
         const options = {
@@ -94,55 +160,47 @@ getDeleteButton(){
 
         return ( 
             <>
+            <ConfirmationPrompts
+                show={this.state.confirmation.show}
+                title={this.state.confirmation.title}
+                text={this.state.confirmation.text}
+                onCancel={this.onCancel}
+                onConfirm={this.onConfirm}
+            />
+
+            <MessagePrompt
+            text={this.state.message.text}
+            show={this.state.message.show}
+            duration={2500}
+            onExited={this.onExitedMessage}
+            />
+
             <Loading show={this.state.loading}/>
 
-            <ToolkitProvider
-                keyField="tp"
-                data={ this.state.rows }
-                columns={ this.props.columns }
-                search
-                >
-                {
-                    props => (
-                    <>
-                        
-                        <hr />
-                        <PaginationProvider
-                                pagination={ paginationFactory(options) }
-                                >
-                                {
-                                    ({
-                                    paginationProps,
-                                    paginationTableProps
-                                    }) => (
-                                    <>
-                                    <Row>
-                                    <Col>
-                                    <SizePerPageDropdownStandalone { ...paginationProps }/>
-                                    </Col>
-
-                                    <Col>    
-                                    <SearchBar { ...props.searchProps } />
-                                    </Col>
-                                    </Row>
-                                        <BootstrapTable
-                                        keyField="bt"
-                                        data={ this.state.rows }
-                                        columns={ this.props.columns }
-                                        { ...paginationTableProps }
-                                        {...props.baseProps }
-                                        />
-                                        <PaginationListStandalone { ...paginationProps } />
-                                    </>
-                                    )
-                                }
-                    </PaginationProvider>
-                                        
-                    </>
-                    )
-                }
-                </ToolkitProvider>
-                </>
+            {this.state.rows.map((e, i) => {
+                return (
+                  <Col>
+                      <Card>
+                          <CardBody>
+                              <CardTitle tag="h5">Thread #{e.nombre}</CardTitle>
+                              <TwitterTweetEmbed
+                                tweetId={e.apellido_p}
+                              />
+                              
+                              <Button
+                              onClick={() => 
+                                this.setState({
+                                    idEmpleado: e._id,
+                                    confirmation: {...this.state.confirmation, show: true},
+                                })}>
+                                Eliminar {e.nombre} 
+                            </Button>
+                          </CardBody>
+                      </Card>
+                  </Col>
+                )
+            })}
+            </>
         );
     }
 }
