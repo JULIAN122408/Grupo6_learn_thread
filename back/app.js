@@ -6,14 +6,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var database = require("./config/database");
-var auth = require("./auth/main_auth");
+// var auth = require("./auth/main_auth");
 var cors =require('cors')//conecta al back
 
 
 var database = require("./config/database");
 
-//mongo conect
-database.mongoConnect();
+//mongo conect (Original)
+// database.mongoConnect();
+
+//Conexion a mongo atlas:
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DB_URI)
+.then(() => console.log("conectado a BD"))
+.catch(err => console.error(err));
 
 
 //var indexRouter = require('./routes/index');
@@ -41,6 +47,8 @@ app.use('/usuarios', usuariosRouter);
 app.use('/learnthreads', learnThreadRouter);
 app.use('/empleados', empleadosRouter);
 // app.use(auth)
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
