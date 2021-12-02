@@ -100,7 +100,7 @@ export default class LearnThreadBuscar  extends React.Component {
     eliminarEmpleados(){
         this.setState({loading:true});
         request
-        .delete(`/empleados/${this.state.idEmpleado}`)
+        .delete(`/learnthreads/${this.state.idEmpleado}`)
         .then((response)=>{
             this.setState({
                 loading:false,

@@ -2,6 +2,7 @@ import React from "react";
 import {Container, Row, Nav} from 'react-bootstrap';
 import EmpleadosBuscar from './croud/buscar';
 import EmpleadosCrear from "./croud/crear";
+import ThreadCrear from "../../learnThread/crud/crear";
 import EmpleadosEditar from "./croud/editar"
 import'./empleados.css';
 
@@ -66,7 +67,7 @@ export default class Empleados  extends React.Component {
                 setIdEmpleado={this.setIdEmpleado}
                 />
                 ) : this.state.currentTab =='Crear' ? (
-                    <EmpleadosCrear changeTab={this.changeTab}/>
+                    <ThreadCrear changeTab={this.changeTab}/>
                 ) :(<EmpleadosEditar 
                     changeTab={this.changeTab}
                     getIdEmpleado={this.getIdEmpleado}

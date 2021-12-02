@@ -56,8 +56,7 @@ exports.update = function(req, res){
     let hilo= {
         nombre:                 req.body.nombre,
         descripcion:            req.body.descripcion,
-        fecha_creacion:         req.body.fecha_creacion,
-        fecha_actualizacion:    req.body.fecha_actualizacion,
+        url:                    req.body.url,
     }
 
 

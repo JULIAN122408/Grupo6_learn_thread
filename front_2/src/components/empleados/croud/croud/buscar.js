@@ -103,7 +103,7 @@ export default class EmpleadosBuscar  extends React.Component {
     eliminarEmpleados(){
         this.setState({loading:true});
         request
-        .delete(`/empleados/${this.state.idEmpleado}`)
+        .delete(`/learnthreads/${this.state.idEmpleado}`)
         .then((response)=>{
             this.setState({
                 loading:false,
@@ -155,10 +155,10 @@ export default class EmpleadosBuscar  extends React.Component {
                 
 
                 <Row>
-                    <h2>BUSCAR EMPLEADOS</h2>
+                    <h2>LEARNTHREAD</h2>
                 </Row>
                 <Row>
-                    <DataGrid url="/empleados" columns={columns}
+                    <DataGrid url="/learnthreads" columns={columns}
                     showEditButton = {true}
                     showDeleteButton= {true}
                     onClickEditButton={this.onClickEditButton} 

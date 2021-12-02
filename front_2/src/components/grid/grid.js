@@ -26,8 +26,8 @@ export default class DataGrid  extends React.Component {
             Loading:false,
             rows: [],
             confirmation:{
-                title:'Modificar empleado',
-                text:'Desea Modificar empleado?',
+                title:'Eliminar Thread',
+                text:'Desea Eliminar Thread?',
                 show:false,
             },
             message :{
@@ -66,40 +66,40 @@ getData(){
 }
 
 
-existsColumn(colText){
-    let col = this.props.columns.find((column) => column.text === colText);
-    return !isUndefined(col);
-}
+    existsColumn(colText){
+        let col = this.props.columns.find((column) => column.text === colText);
+        return !isUndefined(col);
+    }
 
-getEditButton (){
-    return{
-    text:'Editar',
-    formatter: (cell, row) =>{
+    getEditButton (){
+        return{
+        text:'Editar',
+        formatter: (cell, row) =>{
 
-        return (
-            <Button onClick ={()=> this.props.onClickEditButton(row)}>
-            <FontAwesomeIcon icon ={faEdit}/>
-            </Button>
-        );
-    },
-
-    };
-
-}
-
-getDeleteButton(){
-    return{
-        text: 'Eliminar',
-        formatter:(cell, row) =>{
-            return(
-                <Button onClick={()=> this.props.onClickDeleteButton(row)}>
-                    <FontAwesomeIcon icon={faTrash}/>
+            return (
+                <Button onClick ={()=> this.props.onClickEditButton(row)}>
+                <FontAwesomeIcon icon ={faEdit}/>
                 </Button>
             );
         },
 
-    };
-}
+        };
+
+    }
+
+    getDeleteButton(){
+        return{
+            text: 'Eliminar',
+            formatter:(cell, row) =>{
+                return(
+                    <Button onClick={()=> this.props.onClickDeleteButton(row)}>
+                        <FontAwesomeIcon icon={faTrash}/>
+                    </Button>
+                );
+            },
+
+        };
+    }
 
     onCancel(){
         this.setState({
@@ -126,7 +126,7 @@ getDeleteButton(){
     eliminarEmpleados(){
         this.setState({loading:true});
         request
-        .delete(`/empleados/${this.state.idEmpleado}`)
+        .delete(`/learnthreads/${this.state.idEmpleado}`)
         .then((response)=>{
             this.setState({
                 loading:false,
@@ -177,23 +177,27 @@ getDeleteButton(){
 
             <Loading show={this.state.loading}/>
 
-            {this.state.rows.map((e, i) => {
+            {this.state.rows.map((thread, i) => {
                 return (
                   <Col>
                       <Card>
                           <CardBody>
-                              <CardTitle tag="h5">Thread #{e.nombre}</CardTitle>
+                              <CardTitle tag="h5">{thread.nombre}</CardTitle>
                               <TwitterTweetEmbed
-                                tweetId={e.apellido_p}
+                                tweetId={thread.url}
                               />
                               
                               <Button
                               onClick={() => 
                                 this.setState({
-                                    idEmpleado: e._id,
+                                    idEmpleado: thread._id,
                                     confirmation: {...this.state.confirmation, show: true},
                                 })}>
-                                Eliminar {e.nombre} 
+                                Eliminar Thread 
+                            </Button>
+                            <Button
+                              onClick={()=> this.props.onClickEditButton(thread)}>
+                                Editar Thread 
                             </Button>
                           </CardBody>
                       </Card>

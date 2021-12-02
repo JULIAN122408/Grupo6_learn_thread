@@ -85,7 +85,7 @@ exports.remove = function(req, res){
         }
 
         response.exito= true,
-        response.msg="empleado eliminado"
+        response.msg="empleado se fue"
         res.json(response)
 
     })

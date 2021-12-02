@@ -63,8 +63,8 @@ export default class LearnThreadCreate extends React.Component {
 
             if(response.data.exito){
                 this.setState({
+                    rediret:response.data.exito,
                     message: {
-                        rediret:response.data.exito,
                         text: response.data.msg,
                         show: true,
                     },
@@ -81,10 +81,7 @@ export default class LearnThreadCreate extends React.Component {
     }
 
     onExitedMessage(){
-        if(this.state.rediret){
-            this.props.changeTab('buscar')
-        }
-
+        if(this.state.rediret) this.props.changeTab('Buscar');
     }
 
     render() { 
@@ -95,7 +92,7 @@ export default class LearnThreadCreate extends React.Component {
                 <MessagePrompt 
                     text={this.state.message.text}
                     show={this.state.message.show}
-                    duration={5000}
+                    duration={2500}
                     onExited={this.onExitedMessage}
                 />
 

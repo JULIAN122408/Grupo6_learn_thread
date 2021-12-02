@@ -16,6 +16,7 @@ database.mongoConnect();
 
 //var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
+var learnThreadRouter= require('./routes/learnThread.router');
 var empleadosRouter= require('./routes/empleados.router');
 var usuariosRouter = require('./routes/usuario.router');
 const {router} = require("express");
@@ -33,6 +34,7 @@ app.use(cors())
 app.use('/usuarios', usuariosRouter);
 
 //ROUTER
+app.use('/learnthreads', learnThreadRouter);
 app.use('/empleados', empleadosRouter);
 app.use(auth)
 

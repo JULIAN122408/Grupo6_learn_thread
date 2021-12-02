@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Row, Form, Button} from 'react-bootstrap'
+import {Container, Row, Form, Col, Button} from 'react-bootstrap'
 import { request } from '../../../helper/helper';
 import Loading from '../../../loading/loading';
 import MessagePrompt from '../../../prompts/message';
@@ -22,13 +22,10 @@ export default class EmpleadosEditar extends React.Component {
                 show: false,
             },
             loading: false,
-            empleados:{
+            thread:{
                 nombre: '',
-                apellido_p: '',
-                apellido_m: '',
-                telefono: '',
-                mail: '',
-                direccion:'',
+                descripcion: '',
+                url: '',
             }
         };
 
@@ -46,10 +43,10 @@ export default class EmpleadosEditar extends React.Component {
     getEmpleado(){
         this.setState({loading: true});
         request
-        .get(`/empleados/${this.state.idEmpleado}`)
+        .get(`/learnthreads/${this.state.idEmpleado}`)
         .then((response)=>{
         this.setState({
-            empleados:response.data,
+            thread:response.data,
             loading: false,
         });
     })
@@ -60,10 +57,10 @@ export default class EmpleadosEditar extends React.Component {
     }
 
 
-    SetValue(index, value) {
+    setValue(index, value) {
         this.setState({
-            empleados: {
-                ...this.state.empleados,
+            thread: {
+                ...this.state.thread,
                 [index] : value,
             },
         });
@@ -73,7 +70,7 @@ export default class EmpleadosEditar extends React.Component {
         this.setState({loading:true});
 
         request
-        .put(`/empleados/${this.state.idEmpleado}`, this.state.empleados)
+        .put(`/learnthreads/${this.state.idEmpleado}`, this.state.thread)
         .then((response)=>{
             if(response.data.exito){
                 /*this.props.changeTab('Buscar');*/
@@ -146,53 +143,38 @@ export default class EmpleadosEditar extends React.Component {
                 <Row>
 
                 <Form id="empleado-label">
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control
-                        value={this.state.empleados.nombre}     
-                        onChange={(e)=> this.SetValue('nombre', e.target.value)}
-                        />
-                    </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                                <Form.Label column sm="2"> Titulo </Form.Label>
+                                <Col sm="10">
+                                <Form.Control  placeholder="Ingrese un titulo para el learn Thread" 
+                                    value = { this.state.thread.nombre }
+                                    onChange={(e)=> this.setValue('nombre', e.target.value) }
+                                />
+                                </Col>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Primer Apellido</Form.Label>
-                        <Form.Control 
-                        value={this.state.empleados.apellido_p}    
-                        onChange={(e)=> this.SetValue('apellido_p', e.target.value)}
-                        />
-                    </Form.Group>
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                                <Form.Label column sm="2">
+                                Descripción
+                                </Form.Label>
+                                <Col sm="10">
+                                <Form.Control as="textarea" placeholder="Sobre que trata su learn Thread?" style={{ height: '100px' }}
+                                    value = { this.state.thread.descripcion }
+                                    onChange={(e)=> this.setValue('descripcion', e.target.value) }
+                                />
+                                </Col>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Segundo Apellido</Form.Label>
-                        <Form.Control
-                        value={this.state.empleados.apellido_m}     
-                        onChange={(e)=> this.SetValue('apellido_m', e.target.value)}
-                        />
-                    </Form.Group>
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                                <Form.Label column sm="2"> URL: </Form.Label>
+                                <Col sm="10">
+                                <Form.Control  placeholder="Ingrese la URL del learn Thread" 
+                                    value = { this.state.thread.url }
+                                    onChange={(e)=> this.setValue('url', e.target.value) }
+                                />
+                                </Col>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Telefono</Form.Label>
-                        <Form.Control
-                        value={this.state.empleados.telefono}     
-                        onChange={(e)=> this.SetValue('telefono', e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Correo Electronico</Form.Label>
-                        <Form.Control 
-                        value={this.state.empleados.mail}    
-                        onChange={(e)=> this.SetValue('mail', e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Direccion</Form.Label>
-                        <Form.Control
-                        value={this.state.empleados.direccion}     
-                        onChange={(e)=> this.SetValue('direccion', e.target.value)}
-                        />
-                    </Form.Group>
 
 
                     
@@ -203,7 +185,7 @@ export default class EmpleadosEditar extends React.Component {
                         })
                     }
                     >
-                        Guardar Editar Empleado
+                        Editar Thread
                     </Button>
                     </Form>
 
