@@ -13,8 +13,8 @@ export default class EmpleadosEditar extends React.Component {
             idEmpleado : this.props.getIdEmpleado(),
             rediret: false,
             confirmation:{
-                title:'Modificar empleado',
-                text:'Desea Modificar empleado?',
+                title:'Modificar Thread',
+                text:'Desea Modificar Thread?',
                 show:false,
             },
             message :{
@@ -37,10 +37,10 @@ export default class EmpleadosEditar extends React.Component {
     }
 
     componentDidMount(){
-        this.getEmpleado();
+        this.getThread();
     }
 
-    getEmpleado(){
+    getThread(){
         this.setState({loading: true});
         request
         .get(`/learnthreads/${this.state.idEmpleado}`)
@@ -66,7 +66,7 @@ export default class EmpleadosEditar extends React.Component {
         });
     }
 
-    guardarEmpleados(){
+    guardarThread(){
         this.setState({loading:true});
 
         request
@@ -111,11 +111,11 @@ export default class EmpleadosEditar extends React.Component {
                     show: false,
                 }
             },
-
-            this.guardarEmpleados()
+            this.guardarThread()
         );
     }
 
+    
     render() { 
         return ( 
             <Container id ="empleados-crear-container">
@@ -138,7 +138,7 @@ export default class EmpleadosEditar extends React.Component {
                 <Loading show={this.state.loading}/>
 
                 <Row>
-                    <h2> Editar Empleados </h2>
+                    <h2> Editar Thread </h2>
                 </Row>
                 <Row>
 
@@ -174,9 +174,6 @@ export default class EmpleadosEditar extends React.Component {
                                 />
                                 </Col>
                             </Form.Group>
-
-
-
                     
                     <Button variant="primary" 
                     onClick={() => 

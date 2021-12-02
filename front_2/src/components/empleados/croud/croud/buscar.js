@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Row, Button} from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
 //import './empleados.css';
 import DataGrid from '../../../grid/grid';
 import { request } from '../../../helper/helper';
@@ -52,7 +52,6 @@ export default class EmpleadosBuscar  extends React.Component {
 
         };
 
-
         this.onClickEditButton= this.onClickEditButton.bind(this);
         this.onClickDeleteButton= this.onClickDeleteButton.bind(this);
         this.onCancel= this.onCancel.bind(this);
@@ -96,11 +95,11 @@ export default class EmpleadosBuscar  extends React.Component {
                     show:false,
                 },
             },
-            this.eliminarEmpleados()
+            this.eliminarThread()
         );
     }
 
-    eliminarEmpleados(){
+    eliminarThread(){
         this.setState({loading:true});
         request
         .delete(`/learnthreads/${this.state.idEmpleado}`)

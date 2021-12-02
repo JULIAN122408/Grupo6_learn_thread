@@ -1,7 +1,6 @@
 import React from "react";
 import {Container, Row, Nav} from 'react-bootstrap';
 import EmpleadosBuscar from './croud/buscar';
-import EmpleadosCrear from "./croud/crear";
 import ThreadCrear from "../../learnThread/crud/crear";
 import EmpleadosEditar from "./croud/editar"
 import'./empleados.css';
