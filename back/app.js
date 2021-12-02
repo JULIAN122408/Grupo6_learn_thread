@@ -11,7 +11,7 @@ var database = require("./config/database");
 var cors =require('cors')//conecta al back
 
 
-var database = require("./config/database");
+// var database = require("./config/database");
 
 //mongo conect (Original)
 // database.mongoConnect();
