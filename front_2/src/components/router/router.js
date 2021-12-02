@@ -17,7 +17,7 @@ export default function AppRouter () {
                 <Route exact path={['/','/login']} component={Login}/>
                 <PrivateRoute exact path={[ '/empleados' ]} component ={ Empleados }/>
                 <Route exact path= {['/registro', '/login']} component={Registro}/>
-                
+                <PrivateRoute exact path={[ '/hilos' ]} component ={ Empleados }/>
                 <Route
                 path={"*"}
                 component={() =>(

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -27,8 +29,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(express.static(path.join(__dirname, '/site/')));    //Para correr en heroku
+// app.use(express.static(path.join(__dirname, 'public'))); //Original
 app.use(cors())
 
 app.use('/usuarios', usuariosRouter);
@@ -36,7 +40,7 @@ app.use('/usuarios', usuariosRouter);
 //ROUTER
 app.use('/learnthreads', learnThreadRouter);
 app.use('/empleados', empleadosRouter);
-app.use(auth)
+// app.use(auth)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -53,5 +57,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+//Iniciar el servidor
+// const port = process.env.PORT;
+// console.log('Modo:'+ process.env.NODE_ENV);
+// console.log(`Servidor corriendo en http://localhost:${port}`);
+
 
 module.exports = app;

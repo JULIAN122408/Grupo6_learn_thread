@@ -53,6 +53,11 @@ export default class login  extends React.Component {
         } );
 
     }
+
+    paginaRegistro(){
+        this.props.history.push('/registro');
+    }
+
     render() { 
         return ( 
             <Container id="login-container" >
@@ -130,7 +135,8 @@ export default class login  extends React.Component {
                 </Form> 
 
                 <Row id="login-options"> 
-                            <span> No tiene una cuenta?  - <a href="/registro"> Registrese  </a></span>
+                            <span> No tiene una cuenta?  - 
+                            <a href="" onClick={()=>{this.paginaRegistro();}}> Registrese  </a></span>
                         </Row>
 
                 </Col>
