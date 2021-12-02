@@ -1,5 +1,5 @@
 // require("dotenv").config();
-// require("dotenv").config();
+require("dotenv").config();
 
 var createError = require('http-errors');
 var express = require('express');
@@ -20,7 +20,7 @@ var database = require("./config/database");
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DB_URI)
 .then(() => console.log("conectado a BD"))
-.catch(err => console.error(err));
+.catch(err => console.error('error d: '+ err));
 
 
 //var indexRouter = require('./routes/index');
