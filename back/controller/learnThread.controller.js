@@ -7,6 +7,11 @@ let response = {
 }
 
 
+exports.hello = function(req, res){
+    res.json('Hello from Express!');
+}
+
+
 //Funcion para crear Learn Thread 
 exports.create = function(req, res){
     let hilo = new LearnThread({

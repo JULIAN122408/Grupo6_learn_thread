@@ -1,5 +1,5 @@
-// require("dotenv").config();
 require("dotenv").config();
+
 
 var createError = require('http-errors');
 var express = require('express');
@@ -7,7 +7,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 // var database = require("./config/database");
-// var auth = require("./auth/main_auth");
+var auth = require("./auth/main_auth");
 var cors =require('cors')//conecta al back
 
 
@@ -28,6 +28,7 @@ mongoose.connect(process.env.DB_URI)
 var learnThreadRouter= require('./routes/learnThread.router');
 var empleadosRouter= require('./routes/empleados.router');
 var usuariosRouter = require('./routes/usuario.router');
+var helloRouter = require('./routes/ejem.router');
 const {router} = require("express");
 
 var app = express();
@@ -38,16 +39,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use(express.static(path.join(__dirname, '/site/')));    //Para correr en heroku
-// app.use(express.static(path.join(__dirname, 'public'))); //Original
+// app.use(express.static(path.join(__dirname, '/site/')));    //Para correr en heroku
+app.use(express.static(path.join(__dirname, 'public'))); //Original
 app.use(cors())
 
 app.use('/usuarios', usuariosRouter);
+app.use('/', helloRouter);
+
 
 //ROUTER
 app.use('/learnthreads', learnThreadRouter);
 app.use('/empleados', empleadosRouter);
-// app.use(auth)
+app.use(auth)
 
 
 
@@ -72,6 +75,5 @@ app.use(function(err, req, res, next) {
 // const port = process.env.PORT;
 // console.log('Modo:'+ process.env.NODE_ENV);
 // console.log(`Servidor corriendo en http://localhost:${port}`);
-
 
 module.exports = app;
